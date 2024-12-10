@@ -1,0 +1,156 @@
+# Modifier la ligne suivante avec la description de votre site
+site_description: Cours de Physique-Chimie et de SNT de M. Hermoire
+
+# Contenu généré depuis les paramètres de votre espace gitlab à ne pas modifier
+site_name: !ENV [CI_PROJECT_TITLE, "Version locale du site"]
+site_url: !ENV [CI_PAGES_URL, "http://127.0.0.1:8000/"]
+site_author: !ENV [CI_PROJECT_ROOT_NAMESPACE, USERNAME]
+# repo_url: !ENV [CI_PROJECT_URL]  # pour avoir le lien vers le dépôt
+
+# À modifier ci dessous : remplacer Nom d'auteur par votre nom
+copyright: |
+    L. Hermoire
+    <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>.
+    </br><a href="https://aeif.fr">Design by AEIF</a><br/>
+
+
+docs_dir: docs
+
+#nav:  Inutile avec l'utilisation des fichiers .pages plus pratiques 
+
+
+theme:
+    favicon: assets/images/favicon.png
+    icon:
+      logo: material/flask
+    name: pyodide-mkdocs-theme
+    
+    # La palette de couleur est maintenant intégrée par défaut au thème. 
+    # Si vous souhaitez en changer, vous pouvez redéclarer la section entière 
+    # et vos réglages prendront le pas sur les valeurs par défaut.
+    # Mêmes choses pour la langue et la suppression des google-fonts (non RGPD).  
+    font: false                     # RGPD ; pas de fonte Google
+    language: fr                    # français
+    palette:                        # Palettes de couleurs jour/nuit
+      - media: "(prefers-color-scheme: light)"
+        scheme: default
+        primary: indigo
+        accent: indigo
+        toggle:
+            icon: material/weather-sunny
+            name: Passer au mode nuit
+      - media: "(prefers-color-scheme: dark)"
+        scheme: slate
+        primary: blue
+        accent: blue
+        toggle:
+            icon: material/weather-night
+            name: Passer au mode jour
+    features:
+        #- navigation.instant  !! Obligatoire à supprimer
+        #- navigation.tabs   suppression pour avoir le menu vertical
+        - navigation.top
+        - toc.integrate
+        - header.autohide
+        - content.code.annotate   # Pour les annotations de code deroulantes avec +    
+        - content.code.copy  # Ajout après MAJ pour pouvoir copier du code
+
+
+markdown_extensions:
+    - md_in_html
+    - meta
+    - abbr
+    - def_list                      # Les listes de définition.
+    - attr_list                     # Un peu de CSS et des attributs HTML.
+    - footnotes                     # Notes[^1] de bas de page.  [^1]: ma note.
+    - admonition                    # Blocs colorés  !!! info "ma remarque"
+    - pymdownx.details              #   qui peuvent se plier/déplier.
+    - pymdownx.caret                # Passage ^^souligné^^ ou en ^exposant^.
+    - pymdownx.mark                 # Passage ==surligné==.
+    - pymdownx.tilde                # Passage ~~barré~~ ou en ~indice~.
+    - pymdownx.highlight:           # Coloration syntaxique du code
+        auto_title: true
+        anchor_linenums: true
+        line_spans: __span
+        pygments_lang_class: true
+    - pymdownx.inlinehilite         # pour  `#!python  <python en ligne>`
+    - pymdownx.snippets             # Inclusion de fichiers externe.
+    - pymdownx.tasklist:            # Cases à cocher  - [ ]  et - [x]
+        custom_checkbox:    false   #   avec cases d'origine
+        clickable_checkbox: true    #   et cliquables.
+    - pymdownx.tabbed:              # Volets glissants.  === "Mon volet"
+        alternate_style: true 
+
+    - pymdownx.keys:                # Touches du clavier.  ++ctrl+d++
+        separator: "\uff0b"
+    - pymdownx.emoji: # Émojis  :boom:
+        emoji_index: !!python/name:material.extensions.emoji.twemoji
+        emoji_generator: !!python/name:material.extensions.emoji.to_svg
+        options:
+          custom_icons:
+            - overrides/.icons
+    - pymdownx.superfences:
+        custom_fences:
+          - name: mermaid
+            class: mermaid
+            format: !!python/name:pymdownx.superfences.fence_code_format
+    - pymdownx.arithmatex:
+        generic: true
+    - toc:
+        permalink: ⚓︎
+        toc_depth: 3
+
+    - pymdownx.betterem:
+        smart_enable: all
+    - pymdownx.keys
+    - pymdownx.magiclink:
+        repo_url_shorthand: true
+        user: squidfunk
+        repo: mkdocs-material
+    - pymdownx.smartsymbols
+
+
+extra:
+    social:      
+        - icon: fontawesome/solid/book-open
+          link: https://view.genially.com/6356b3f11462d40017d6fc8f
+          name: Manuels scolaires de Physique-Chimie
+
+        - icon: fontawesome/solid/envelope
+          link: mailto:Loic.Hermoire@ac-lille.fr
+          name: Écrire à l'auteur
+
+
+
+plugins:
+
+  - awesome-pages:
+      collapse_single_pages: true
+
+  - search
+  - tags:
+      tags_file: tags.md
+  - pyodide_macros:
+      # Vous pouvez ajouter ici tout réglage que vous auriez ajouté concernant les macros:
+      on_error_fail: true     # Il est conseillé d'ajouter celui-ci si vous ne l'utilisez pas.
+      build:
+        python_libs:
+          - turtle
+        tab_to_spaces: 4
+  - sqlite-console
+
+# En remplacement de mkdocs-exclude. Tous les fichiers correspondant aux patterns indiqués seront
+# exclu du site final et donc également de l'indexation de la recherche.
+# Nota: ne pas mettre de commentaires dans ces lignes !
+exclude_docs: |
+    **/*_REM.md
+    **/*.py
+
+
+extra_javascript:  
+  #- xtra/mathjax.js                    # MathJax Supprimé pour MAJ pyodide 
+  #- https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js    Supprimé pour MAJ pyodide 
+  - javascripts/removeTrashBtn.js
+
+extra_css:
+  - xtra/stylesheets/ajustements.css                      # ajustements
